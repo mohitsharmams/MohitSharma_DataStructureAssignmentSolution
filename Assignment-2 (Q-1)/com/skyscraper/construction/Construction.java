@@ -9,20 +9,25 @@ import java.util.Stack;
 //Using Deque Linked List & Stacks
 public class Construction {
 	int size;
-	Stack<Integer> stack = new Stack<Integer>(); 
+	Stack<Integer> stack = new Stack<Integer>();
 	Deque<Integer> dq = new LinkedList<Integer>();
 
 	// Method to store user input into deque
 	public void createFloor(int size, Scanner sc) {
 		this.size = size;
 		for(int i = 0 ; i < size ; i++) {
-			System.out.print("Enter floor size on day - "+(i+1)+" : ");
+			System.out.print("Enter floor size on day - " + (i + 1) + " : ");
 			int temp = sc.nextInt();
-			if(temp <= 0) {				// Checking condition for Invalid entry zero or negative
+			boolean flag = discardDuplicates(dq, temp);  // flag to check Duplicate values
+			if (flag) { 						// No Duplicate value entered
+				System.out.println("Duplicate floor size, enter again");
+				--i;
+			}
+			else if (temp <= 0 && !flag) {            // Checking condition for Invalid entry zero or negative
 				System.out.println("Invalid floor size, enter again");
 				--i;
 			}
-			else {
+			else if(temp > 0 && !flag) {
 				dq.add(temp);
 			}
 		}
@@ -68,15 +73,27 @@ public class Construction {
 
 				}
 				else {
-					j++;	
+					j++;
 				}
 			}
 		}
 
 	}
 
+	// Method to discard duplicate values
+	public boolean discardDuplicates(Deque<Integer> dq, int value){
 
-	// Method to create temporary deque dq1 and inserting descending order sorted elements in stack 
+		Iterator<Integer> dqIter2 = dq.iterator();
+		while(dqIter2.hasNext()) {
+			int tempDuplicate = dqIter2.next();
+			if(tempDuplicate == value) {
+				return true;  // Duplicate value entered
+			}
+		}
+		return false;  // No duplicates
+	}
+
+	// Method to create temporary deque dq1 and inserting descending order sorted elements in stack
 	public void SortingDequeIntoStack(Deque<Integer> dq){
 
 		Deque<Integer> dq1 = new LinkedList<Integer>();  // temporary deque dq1
@@ -98,7 +115,7 @@ public class Construction {
 			stack.push(tempMin);    // pushing minimum values first in stack
 			dq1.remove(tempMin);    // removing minimum value from temporary deque dq1
 		}
-	}	
+	}
 }
 
 
