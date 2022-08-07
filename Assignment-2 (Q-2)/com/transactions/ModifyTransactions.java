@@ -27,7 +27,7 @@ public class ModifyTransactions {
 			System.out.println("Enter transaction no. "+count+" value");
 			key = sc.nextInt();
 			if(key < 0) {
-				System.out.println("Transaction value can not be negatice");
+				System.out.println("Transaction value can not be negative");
 				count--;
 				continue;
 			}
@@ -46,7 +46,7 @@ public class ModifyTransactions {
 				}
 			}
 			System.out.println("BST inorder after inserting value- "+key+" :");
-			ct.preorderBST(root);
+			ct.inorderBST(root);
 			System.out.println("");
 		}
 		
